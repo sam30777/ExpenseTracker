@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">ExpenseTracker</string>
+    <string-array name="currency_array">
+        <item>India</item>
+        <item>Japan</item>
+        <item>Russia</item>
+        <item>United States</item>
+        <item>Canada</item>
+
+    </string-array>
+    <string-array name="payment_method">
+        <item>Cash</item>
+        <item>Cheque</item>
+        <item>Digital</item>
+    </string-array>
+    <string name="vertical_ellipsis">&#8942;</string>
+
+<string name="Open">Open</string>
+    <string name="Close">Close</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+</resources>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:theme="@style/CustomTheme"
+    android:background="#FFFFFF"
+    android:paddingBottom="16dp"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/linear_l"
+        android:background="#4DB6AC"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcome"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+        android:text="Hello! Welcome "/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="@android:color/white"
+        android:fontFamily="sans-serif"
+        android:id="@+id/textview2"
+        android:text="Please Update Your Monthly Salary and Country !"/>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear_l"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="sans-serif"
+        app:backgroundTint="#1DE9B6"
+        android:backgroundTint="#1DE9B6"
+        android:inputType="number"
+        android:id="@+id/edit_text_salary"
+        android:hint="salary per month"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@id/edit_text_salary"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:fontFamily="sans-serifc"
+
+        android:id="@+id/country"
+        android:text="Country"/>
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        app:backgroundTint="#1DE9B6"
+        android:layout_marginLeft="24dp"
+        android:id="@+id/country_spinner"
+        android:backgroundTint="#1DE9B6"
+        android:scrollbarSize="24dp"
+        android:tooltipText="India"
+        android:layout_marginStart="24dp"
+       >
+    </Spinner>
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        android:id="@+id/done_updating"
+        android:text="Done"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        app:backgroundTint="#1DE9B6"
+        android:background="@drawable/circularborder"
+        />
+
+</RelativeLayout>

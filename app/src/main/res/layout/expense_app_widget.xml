@@ -1,0 +1,250 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_margin"
+    android:background="@android:color/white"
+
+    >
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_centerHorizontal="true"
+    android:padding="8dp"
+    android:layout_below="@+id/tempRelative"
+    android:textColor="@android:color/black"
+    android:id="@+id/add_expense_widget"
+    android:background="@drawable/circularborder"
+    android:text="Add Expense"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="#4DB6AC"
+        android:id="@+id/tempLinear"
+        android:layout_height="100dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:text="Total Salary"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/salary_value_widget"
+                android:textColor="@android:color/white" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="start"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:layout_gravity="center_horizontal"
+                android:text="Total Expense"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif-smallcaps"
+                android:id="@+id/expene_value_widget"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="start"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:layout_gravity="center_horizontal"
+                android:text="Total Savings"
+                android:textColor="@android:color/white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:id="@+id/savings_value_widget"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+    </LinearLayout><LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="#4DB6AC"
+    android:layout_height="100dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:text="Total Salary"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/salary_value"
+            android:textColor="@android:color/white" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="start"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:layout_gravity="center_horizontal"
+            android:text="Total Expense"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:id="@+id/expene_value"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="start"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:layout_gravity="center_horizontal"
+            android:text="Total Savings"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-smallcaps"
+            android:id="@+id/savings_value"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="8dp"
+        android:id="@+id/tempRelative"
+        android:layout_below="@+id/recent_Text"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/icons8_movie_projector_48"
+            android:id="@+id/expense_type_image"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Movie"
+            android:layout_marginLeft="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:id="@+id/expense_type_text_field"
+            android:layout_alignTop="@+id/expense_type_image"
+            android:layout_toRightOf="@+id/expense_type_image"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/expense_type_image"
+            android:layout_alignBottom="@+id/expense_type_image"
+            android:layout_marginLeft="16dp"
+            android:layout_below="@+id/expense_type_text_field"
+            android:text="1000"
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/expense_amount_text"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/payment_method_per_time"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16sp"
+            android:layout_marginRight="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:text="Cash"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="4:20 pm"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:id="@+id/payment_time"
+            android:layout_marginRight="16dp"
+            android:layout_below="@+id/payment_method_per_time"/>
+       />
+    </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tempLinear"
+        android:id="@+id/recent_Text"
+        android:textColor="#212121"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="16dp"
+        android:text="Recent Expense"/>
+
+
+</RelativeLayout>
