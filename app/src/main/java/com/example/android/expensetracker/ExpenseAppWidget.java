@@ -6,14 +6,12 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
+import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.expensetracker.data.ExpenseParticularDay;
 import com.example.android.expensetracker.data.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,37 +24,23 @@ import java.util.Date;
  * Implementation of App Widget functionality.
  */
 public class ExpenseAppWidget extends AppWidgetProvider {
-       private ExpenseParticularDay expenseParticularDay;
+
+
     @Override
-    public void onUpdate(final Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        for (int appWidgetId : appWidgetIds) {
-            Intent intent = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        for (final int appWidgetId : appWidgetIds) {
 
-
-
-          final   RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.expense_app_widget);
-
-
-            Date date = new Date();
-            final String dayOfTheWeek = (String) DateFormat.format("EEEE", date);
-            final String day = (String) DateFormat.format("dd", date);
-            final String monthString = (String) DateFormat.format("MMM", date);
-            String  d = dayOfTheWeek + "-" + day + "-" + monthString;
-
-            DatabaseReference recentDataRefrence=FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid()).child("expense_by_date_list").child(d);
-            recentDataRefrence.addValueEventListener(new ValueEventListener() {
+            final DatabaseReference databseRef = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid());
+            databseRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                   expenseParticularDay=dataSnapshot.getValue(ExpenseParticularDay.class);
-                    views.setTextViewText(R.id.expense_amount_text,expenseParticularDay.getExpense());
-                    views.setImageViewResource(R.id.expense_type_image,expenseParticularDay.getExpense_type_image_resource_id());
-                    views.setTextViewText(R.id.expense_type_text_field,expenseParticularDay.getEspense_type());
-                    views.setTextViewText(R.id.payment_time,expenseParticularDay.getExpense_time());
-                    views.setTextViewText(R.id.payment_method_per_time,expenseParticularDay.getPayment_method());
-
-                   Toast.makeText(context,expenseParticularDay.getEspense_type(),Toast.LENGTH_SHORT).show();
+                    RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.expense_app_widget);
+                    User user = dataSnapshot.getValue(User.class);
+                    remoteViews.setTextViewText(R.id.salary_value_widget, user.getSalary_final());
+                    remoteViews.setTextViewText(R.id.savings_value_widget, user.getSavings_final());
+                    remoteViews.setTextViewText(R.id.expene_value_widget, user.getExpense_final());
+                    appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
                 }
 
                 @Override
@@ -65,12 +49,73 @@ public class ExpenseAppWidget extends AppWidgetProvider {
                 }
             });
 
-            views.setOnClickPendingIntent(R.id.add_expense_widget, pendingIntent);
+            Intent intent = new Intent(context, MainActivity.class);
+            final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-            appWidgetManager.updateAppWidget(appWidgetId, views);
+            Date date = new Date();
+            final String dayOfTheWeek = (String) DateFormat.format(context.getString(R.string.day_format), date);
+            final String day = (String) DateFormat.format(context.getString(R.string.day), date);
+            final String monthString = (String) DateFormat.format(context.getString(R.string.mmm), date);
+            final String d = dayOfTheWeek + "-" + day + "-" + monthString;
+
+            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid()).child(context.getString(R.string.expense_bydate_key)).child(d);
+
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild(context.getString(R.string.recent_key))) {
+                        final DatabaseReference recentRef = databaseReference.child(context.getString(R.string.recent_key));
+                        recentRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot data) {
+                                ExpenseParticularDay expenseParticularDay = data.getValue(ExpenseParticularDay.class);
+                                RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.expense_app_widget);
+                                if (expenseParticularDay != null) {
+                                    remoteViews.setOnClickPendingIntent(R.id.add_expense_widget, pendingIntent);
+                                    remoteViews.setTextViewText(R.id.expense_type_text_field, expenseParticularDay.getEspense_type());
+                                    remoteViews.setImageViewResource(R.id.expense_type_image, expenseParticularDay.getExpense_type_image_resource_id());
+                                    remoteViews.setTextViewText(R.id.expense_amount_text, expenseParticularDay.getExpense());
+                                    remoteViews.setTextViewText(R.id.payment_method_per_time, expenseParticularDay.getPayment_method());
+                                    remoteViews.setTextViewText(R.id.payment_time, expenseParticularDay.getExpense_time());
+                                    remoteViews.setViewVisibility(R.id.tempRelative, View.VISIBLE);
+                                    remoteViews.setViewVisibility(R.id.noExpenseWidget, View.GONE);
+                                } else {
+                                    remoteViews.setViewVisibility(R.id.tempRelative, View.GONE);
+                                    remoteViews.setViewVisibility(R.id.noExpenseWidget, View.VISIBLE);
+                                }
+
+                                appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                    } else {
+                        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.expense_app_widget);
+                        remoteViews.setTextViewText(R.id.noExpenseWidget, context.getString(R.string.NoExpenseAddedWidget));
+                        remoteViews.setViewVisibility(R.id.noExpenseWidget, View.VISIBLE);
+
+                        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
         }
     }
-
-
 }
+
+
+
 

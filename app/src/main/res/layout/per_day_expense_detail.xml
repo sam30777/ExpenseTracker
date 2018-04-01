@@ -1,69 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:elevation="2dp"
     android:layout_marginLeft="8dp"
-    android:layout_marginTop="2dp"
     android:layout_marginRight="8dp"
+    android:layout_marginTop="2dp"
+    android:elevation="2dp"
     card_view:cardCornerRadius="4dp">
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:padding="8dp"
-        android:layout_height="match_parent">
-  <ImageView
-      android:layout_width="56dp"
-      android:layout_height="56dp"
-      android:src="@drawable/icons8_movie_projector_48"
-      android:id="@+id/expense_type_image"/>
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Movie"
-      android:layout_marginLeft="16dp"
-      android:fontFamily="sans-serif-condensed"
-      android:textStyle="bold"
-      android:textSize="16sp"
-      android:id="@+id/expense_type_text_field"
-      android:layout_alignTop="@+id/expense_type_image"
-      android:layout_toRightOf="@+id/expense_type_image"/>
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_toRightOf="@+id/expense_type_image"
-      android:layout_alignBottom="@+id/expense_type_image"
-      android:layout_marginLeft="16dp"
-      android:layout_below="@+id/expense_type_text_field"
-      android:text="1000"
-      android:fontFamily="sans-serif-condensed"
-      android:id="@+id/expense_amount_text"/>
-  <TextView
-      android:layout_width="wrap_content"
-      android:id="@+id/payment_method_per_time"
-      android:fontFamily="sans-serif-condensed"
-      android:textSize="16sp"
-       android:layout_marginRight="16dp"
-      android:layout_alignParentRight="true"
-      android:layout_height="wrap_content"
-      android:text="Cash"/>
-     <TextView
-         android:layout_width="wrap_content"
-         android:text="4:20 pm"
-         android:layout_alignParentRight="true"
-         android:layout_height="wrap_content"
-         android:id="@+id/payment_time"
-         android:layout_marginRight="16dp"
-         android:layout_below="@+id/payment_method_per_time"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/vertical_ellipsis"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_alignParentRight="true"
-        android:id="@+id/menu_options"/>
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/expense_type_image"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:contentDescription="@string/expense_type_image"
+            android:src="@drawable/icons8_movie_projector_48" />
+
+        <TextView
+            android:id="@+id/expense_type_text_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/expense_type_image"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/expense_type_image"
+            android:layout_toRightOf="@+id/expense_type_image"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/expense_amount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/expense_type_image"
+            android:layout_below="@+id/expense_type_text_field"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/expense_type_image"
+            android:layout_toRightOf="@+id/expense_type_image"
+            android:fontFamily="sans-serif-condensed" />
+
+        <TextView
+            android:id="@+id/payment_method_per_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/payment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/payment_method_per_time"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp" />
+
+        <TextView
+            android:id="@+id/menu_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/vertical_ellipsis"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

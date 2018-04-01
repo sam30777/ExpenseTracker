@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="16dp"
+    android:layout_height="160dp"
     android:background="@drawable/navbackground"
-    android:layout_height="160dp">
-   <de.hdodenhof.circleimageview.CircleImageView
-       android:layout_width="74dp"
-       android:layout_height="74dp"
-       android:id="@+id/circular_user_image"/>
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circular_user_image"
+        android:layout_width="74dp"
+        android:layout_height="74dp" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
         android:id="@+id/user_name"
-        android:layout_marginTop="4dp"
-        android:text="Random"/>
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:id="@+id/user_mail_id"
         android:layout_marginTop="4dp"
-        android:text="random_mail"/>
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/user_mail_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 </LinearLayout>

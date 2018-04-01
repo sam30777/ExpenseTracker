@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<SwitchPreference
+    android:title="@string/switchpreftite"
+    android:defaultValue="true"
+    android:key="@string/notificationReminder"
+    />
+   <EditTextPreference
+       android:title="@string/monthly_salary"
+       android:defaultValue="@string/editprefdefault"
+       android:key="@string/monthlySalary"
+       />
+    <ListPreference
+        android:title="@string/salary_update"
+        android:key="@string/salaryUpdate"
+        android:defaultValue="@string/list_pref_default"
+        android:entryValues="@array/date_Array"
+        android:entries="@array/date_Array"
+        />
+</PreferenceScreen>

@@ -1,69 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEEEEE"
     tools:context="com.example.android.expensetracker.ByTimeExpense">
+
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/appBarLayout"
         android:fitsSystemWindows="true">
-        
+
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-          <ImageView
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:scaleType="centerCrop"
 
-              android:src="@drawable/expensemain"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/expenseimage"
+                android:scaleType="centerCrop"
+                android:src="@drawable/expensemain" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:textSize="20sp"
-                android:textColor="@android:color/white"
-                android:text="Total Expense:2000"
-                android:gravity="center"
-                android:background="#009688"/>
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent"
-        android:layout_marginTop="4dp"
-        android:id="@+id/by_time_expense_details">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#009688"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="72dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:gravity="center"
+                    android:text="@string/total_expense"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/todayExpense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="72dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/by_time_expense_details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp">
+
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floating_add_button"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="16dp"
-        app:layout_anchor="@+id/appBarLayout"
         android:elevation="6dp"
+        android:src="@android:drawable/ic_input_add"
         app:elevation="6dp"
-        app:layout_anchorGravity="bottom|right|end"
-        android:id="@+id/floating_add_button"
-        android:src="@android:drawable/ic_input_add"/>
+        app:layout_anchor="@+id/appBarLayout"
+        app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>

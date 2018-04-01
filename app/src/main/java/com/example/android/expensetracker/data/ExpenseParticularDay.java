@@ -13,50 +13,34 @@ public class ExpenseParticularDay {
     private String push_Id;
     private String date;
 
-    public ExpenseParticularDay(String a, String b, String c, Integer d, String z,String puid,String da) {
+    public ExpenseParticularDay(String a, String b, String c, Integer d, String z, String puid, String da) {
         this.expense = a;
         this.espense_type = b;
         this.expense_time = c;
         this.payment_method = z;
         this.expense_type_image_resource_id = d;
-        this.push_Id=puid;
-        this.date=da;
-    }
-    public void setPush_Id(String a){
-        this.push_Id=a;
-
-    }
-    public String getPush_Id(){
-        return push_Id;
+        this.push_Id = puid;
+        this.date = da;
     }
 
     public ExpenseParticularDay() {
     }
-    public void setDate(String da){
-        this.date=da;
+
+    public String getPush_Id() {
+        return push_Id;
     }
-    public String getDate(){
+
+    public void setPush_Id(String a) {
+        this.push_Id = a;
+
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setExpense(String expense) {
-        this.expense = expense;
-    }
-
-    public void setEspense_type(String espense_type) {
-        this.espense_type = espense_type;
-    }
-
-    public void setExpense_time(String expense_time) {
-        this.expense_time = expense_time;
-    }
-
-    public void setPayment_method(String payment_method) {
-        this.payment_method = payment_method;
-    }
-
-    public void setExpense_type_image_resource_id(Integer expense_type_image_resource_id) {
-        this.expense_type_image_resource_id = expense_type_image_resource_id;
+    public void setDate(String da) {
+        this.date = da;
     }
 
     public String getExpense() {
@@ -64,19 +48,39 @@ public class ExpenseParticularDay {
         return expense;
     }
 
+    public void setExpense(String expense) {
+        this.expense = expense;
+    }
+
     public String getEspense_type() {
         return espense_type;
+    }
+
+    public void setEspense_type(String espense_type) {
+        this.espense_type = espense_type;
     }
 
     public String getExpense_time() {
         return expense_time;
     }
 
+    public void setExpense_time(String expense_time) {
+        this.expense_time = expense_time;
+    }
+
     public String getPayment_method() {
         return payment_method;
     }
 
+    public void setPayment_method(String payment_method) {
+        this.payment_method = payment_method;
+    }
+
     public Integer getExpense_type_image_resource_id() {
         return expense_type_image_resource_id;
+    }
+
+    public void setExpense_type_image_resource_id(Integer expense_type_image_resource_id) {
+        this.expense_type_image_resource_id = expense_type_image_resource_id;
     }
 }

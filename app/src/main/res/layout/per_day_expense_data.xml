@@ -1,167 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="2dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
+    android:layout_marginTop="2dp"
     android:background="@drawable/customelevation"
-    android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
     tools:context="com.example.android.expensetracker.MainActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:gravity="center"
-       android:padding="8dp"
-       android:layout_gravity="center"
-       android:layout_height="72dp">
-    <TextView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:text="3"
-        android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold"
-        android:padding="8dp"
-        android:gravity="center"
-        android:backgroundTint="#1DE9B6"
-        app:backgroundTint="#1DE9B6"
-        android:id="@+id/day"
-        android:textColor="@android:color/white"
-        android:background="@drawable/circulartextview"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="8dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:id="@+id/month"
-        android:textColor="#212121"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/day"/>
+            <TextView
+                android:id="@+id/day"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/circulartextview"
+                android:backgroundTint="#1DE9B6"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                app:backgroundTint="#1DE9B6" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="#212121"
-        android:fontFamily="sans-serif"
-        android:layout_marginLeft="4dp"
-        android:id="@+id/day_name"
-        android:layout_toRightOf="@+id/month"
-        />
+            <TextView
+                android:id="@+id/month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/day"
+                android:layout_toRightOf="@+id/day"
+                android:fontFamily="sans-serif"
+                android:textColor="#212121"
+                android:textStyle="bold" />
 
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/month"
-          android:fontFamily="sans-serif-condensed"
-          android:layout_toRightOf="@+id/expense_image"
-          android:layout_marginTop="4dp"
-          android:textStyle="bold"
-          android:id="@+id/exp"
-          android:text="Expense :"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/exp"
-        android:layout_below="@+id/month"
-        android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:id="@+id/expenditure_text"
-        android:text="2000 $"/>
+            <TextView
+                android:id="@+id/day_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_toEndOf="@+id/month"
+                android:layout_toRightOf="@+id/month"
+                android:fontFamily="sans-serif"
+                android:textColor="#212121"
+                android:textStyle="bold" />
 
-    <TextView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentRight="true"
-       android:layout_centerVertical="true"
-        android:layout_marginBottom="4dp"
-       android:layout_marginRight="4dp"
-        android:id="@+id/seeDetails"
-        android:fontFamily="sans-serif"
-       android:text="see details.."/>
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_below="@+id/month"
-        android:layout_marginLeft="12dp"
-        android:src="@drawable/expense"
-        android:layout_toRightOf="@+id/day"
-        android:id="@+id/expense_image"
-        android:layout_height="24dp" />
+            <TextView
+                android:id="@+id/exp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/month"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@+id/expense_image"
+                android:layout_toRightOf="@+id/expense_image"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/expense"
+                android:textStyle="bold" />
 
-   </RelativeLayout>
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="74dp"
-             android:textStyle="bold"
-             android:textColor="@android:color/black"
-             android:text="Recent Expense"/>
+            <TextView
+                android:id="@+id/expenditure_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/month"
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@+id/exp"
+                android:layout_toRightOf="@+id/exp"
+                android:fontFamily="sans-serif-smallcaps" />
+
+            <TextView
+                android:id="@+id/seeDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/see_details" />
+
+            <ImageView
+                android:id="@+id/expense_image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_below="@+id/month"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@+id/day"
+                android:layout_toRightOf="@+id/day"
+                android:contentDescription="@string/expense_wallet"
+                android:src="@drawable/expense" />
+
+        </RelativeLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="74dp"
+            android:layout_marginStart="74dp"
+            android:text="Recent Expense"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/no_Expense"
-            android:layout_marginTop="4dp"
-            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="No Expense Added Today!"/>
+            android:layout_marginLeft="74dp"
+            android:layout_marginStart="74dp"
+            android:layout_marginTop="4dp"
+            android:text="@string/no_expense_added_today"
+            android:visibility="gone" />
+
         <RelativeLayout
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:padding="8dp"
-            android:id="@+id/relative_layout"
-            android:visibility="gone"
-            android:layout_height="match_parent">
+            android:visibility="gone">
 
             <ImageView
+                android:id="@+id/expense_type_image"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:id="@+id/expense_type_image"/>
+                android:contentDescription="@string/expense_type_image" />
+
             <TextView
+                android:id="@+id/expense_type_text_field"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:fontFamily="sans-serif-condensed"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:id="@+id/expense_type_text_field"
                 android:layout_alignTop="@+id/expense_type_image"
-                android:layout_toRightOf="@+id/expense_type_image"/>
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/expense_type_image"
+                android:layout_toRightOf="@+id/expense_type_image"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/expense_amount_text"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/expense_type_image"
                 android:layout_alignBottom="@+id/expense_type_image"
-                android:layout_marginLeft="16dp"
                 android:layout_below="@+id/expense_type_text_field"
-                android:fontFamily="sans-serif-condensed"
-                android:id="@+id/expense_amount_text"/>
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/expense_type_image"
+                android:layout_toRightOf="@+id/expense_type_image"
+                android:fontFamily="sans-serif-condensed" />
+
             <TextView
-                android:layout_width="wrap_content"
                 android:id="@+id/payment_method_per_time"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="16sp"
-                android:layout_marginRight="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_height="wrap_content"
-               />
-            <TextView
                 android:layout_width="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_height="wrap_content"
-                android:id="@+id/payment_time"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_below="@+id/payment_method_per_time"/>
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/payment_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/payment_method_per_time"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp" />
 
         </RelativeLayout>
     </LinearLayout>

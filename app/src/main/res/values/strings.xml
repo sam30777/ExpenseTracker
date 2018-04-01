@@ -15,8 +15,129 @@
     </string-array>
     <string name="vertical_ellipsis">&#8942;</string>
 
-<string name="Open">Open</string>
+    <string name="Open">Open</string>
     <string name="Close">Close</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="NoExpenseAddedWidget">No Expense Added Today!</string>
+
+    <string name="monthlySalary">monthly_salary</string>
+    <string name="salaryUpdate">salary_update_date</string>
+    <string name="notificationReminder">expense_notification</string>
+    <string name="singlePref">singleChildPref</string>
+    <string name="settingsTile">Settings</string>
+    <string name="details">Details</string>
+    <string name="intentPassingDate">date</string>
+    <string name="expenseimage">ExpenseImage</string>
+    <string name="total_expense">Total Expense:</string>
+    <string name="total_salary">Total Salary</string>
+    <string name="total_expense_main">Total Expense</string>
+    <string name="total_savings">Total Savings</string>
+    <string name="savings">Savings:</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="total_expense_widget">Total Expense</string>
+    <string name="total_savings_widget">Total Savings</string>
+    <string name="expense_type_image">expenseType</string>
+    <string name="no_expense_added">No Expense Added</string>
+    <string name="recent_expense">Recent Expense</string>
+    <string name="cancel">x</string>
+    <string name="select_expense_type">Select Expense Type</string>
+    <string name="expense_type_image_popup">expense_type_image_popup</string>
+    <string name="no_expense_added_today">No Expense Added Today!</string>
+    <string name="see_details">see details..</string>
+    <string name="expense">Expense :</string>
+    <string name="expense_wallet">expense_wallet</string>
+    <string name="hello_welcome">Hello! Welcome</string>
+    <string name="please_update_your_monthly_salary_and_country">Please Update Your Monthly Salary and Country !</string>
+    <string name="salary_per_month">salary per month</string>
+    <string name="country">Country</string>
+    <string name="done">Done</string>
+    <string name="home_rent">Home rent</string>
+    <string name="expense_bydate_key">expense_by_date_list</string>
+    <string name="log_message">The interstitial wasn\'t loaded yet.</string>
+    <string name="home">Home rent</string>
+    <string name="gym">Gym</string>
+    <string name="booze">Booze</string>
+    <string name="clothes">Clothes</string>
+    <string name="movie">Movie</string>
+    <string name="bus">Bus</string>
+    <string name="outing">Outing</string>
+    <string name="food">Food</string>
+    <string name="gas">Gas</string>
+    <string name="household">HouseHold Gas</string>
+    <string name="grooming">Grooming</string>
+    <string name="util_action_add">add</string>
+    <string name="recent_key">Rexcent</string>
+    <string name="expense_by_time_key">expense_by_time_list</string>
+    <string name="zero">0</string>
+    <string name="savings_key">savings_final</string>
+    <string name="util_action_delet">delet</string>
+    <string name="user_possitive_message">You are under budget feel free to spend.</string>
+    <string name="user_negative_message">Your total expense amount have exceeded your total savings</string>
+    <string name="util_Action_replace">replace</string>
+    <string name="pattern">hh:mm a</string>
+    <string name="expense_particular_day">expense_that_day</string>
+    <string name="day_format">EEEE</string>
+    <string name="day">dd</string>
+    <string name="mmm">MMM</string>
+    <string name="log_tag">TAG</string>
+    <string name="salary_key">salary_final</string>
+    <string name="expensE_final">expense_final</string>
+    <string name="savings_final">savings_final</string>
+    <string name="date_format">dd</string>
+    <string name="test_add_key">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="user_notificatin_message">Hey Keep Updating Expense!</string>
+    <string name="user_notification_content">Keep updating expense to keep track of your money</string>
+    <string name="job_started">Job sarted</string>
+    <string name="reminder">Reminder</string>
+    <string name="add_expense_notify">Add Expense</string>
+    <string name="complete">Complete</string>
+    <string name="user_message">Some of the fields are empty Data will not be saved!</string>
+    <string name="exit">Exit</string>
+    <string name="user_message_budget">You are under budget feel free to spend.</string>
+    <string name="final_savings">savings_final</string>
+    <string name="final_expense">expense_final</string>
+    <string name="greetings">Welcome!</string>
+    <string name="signinfailed">Sign in Failed</string>
+    <string name="switchpreftite">Expense Reminder</string>
+    <string name="monthly_salary">Monthly Salary</string>
+    <string name="salary_update">Salary Update Date</string>
+    <string name="editprefdefault">0</string>
+    <string name="list_pref_default">02</string>
+    <string name="delet_warning">The data will be deleted!</string>
+    <string name="confirm">confirm</string>
+    <string name="cancel_delet">cancel</string>
+    <string-array name="date_Array">
+         <item>01</item>
+         <item>02</item>
+         <item>03</item>
+         <item>04</item>
+         <item>05</item>
+         <item>06</item>
+         <item>07</item>
+         <item>08</item>
+         <item>09</item>
+         <item>10</item>
+         <item>11</item>
+         <item>12</item>
+         <item>13</item>
+         <item>14</item>
+         <item>15</item>
+         <item>16</item>
+         <item>17</item>
+         <item>18</item>
+         <item>19</item>
+         <item>20</item>
+         <item>21</item>
+         <item>22</item>
+         <item>23</item>
+         <item>24</item>
+         <item>25</item>
+         <item>26</item>
+         <item>27</item>
+         <item>28</item>
+         <item>29</item>
+         <item>30</item>
+         <item>31</item>
+     </string-array>
 </resources>
