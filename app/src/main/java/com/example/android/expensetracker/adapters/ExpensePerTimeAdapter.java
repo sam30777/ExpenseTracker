@@ -90,7 +90,7 @@ public class ExpensePerTimeAdapter extends RecyclerView.Adapter<ExpensePerTimeAd
                     public boolean onMenuItemClick(MenuItem item) {
 
                         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+                        final FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
                         final DatabaseReference databaseref = firebaseDatabase.getReference().child(firebaseUser.getUid()).child(context.getString(R.string.expense_bydate_key)).child(expenseOverallByDate.getDate()).child(context.getString(R.string.expense_by_time_key));
                         if (item.getItemId() == R.id.delet_item) {
                             showDeleteConfirmationDialog(expenseOverallByDate, databaseref, position);
@@ -102,7 +102,6 @@ public class ExpensePerTimeAdapter extends RecyclerView.Adapter<ExpensePerTimeAd
                             updatePopUpSavings(dialog, overAllSavings);
                             final EditText editText = dialog.findViewById(R.id.expense_amount_per_time);
                             editText.setText(expenseOverallByDate.getExpense());
-                            editText.setOnTouchListener(mTouchListener);
                             final ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(context, R.array.payment_method, android.R.layout.simple_spinner_item);
                             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             final Spinner spin = dialog.findViewById(R.id.payment_method_spinner);
@@ -114,12 +113,10 @@ public class ExpensePerTimeAdapter extends RecyclerView.Adapter<ExpensePerTimeAd
                             expense_type = expenseOverallByDate.getEspense_type();
                             final ImageView expenseTypeImage = dialog.findViewById(R.id.expense_type_temp_image);
                             expenseTypeImage.setImageResource(expense_image);
-                            expenseTypeImage.setOnTouchListener(mTouchListener);
                             final TextView text = dialog.findViewById(R.id.expense_type_temp_text);
                             text.setText(expense_type);
                             dialog.show();
                             ImageView imageview = dialog.findViewById(R.id.dialog_to_doalog);
-                            imageview.setOnTouchListener(mTouchListener);
                             imageview.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -161,13 +158,13 @@ public class ExpensePerTimeAdapter extends RecyclerView.Adapter<ExpensePerTimeAd
                                         UpdateDataUtils.updateTotalExpense(expAmount, context.getString(R.string.util_Action_replace), expenseOverallByDate.getExpense(), context);
                                         UpdateDataUtils.updateTotalSavings(expAmount, context.getString(R.string.util_Action_replace), expenseOverallByDate.getExpense(), context);
                                         ExpenseParticularDay expenseParticularDay = new ExpenseParticularDay(expAmount, expense_type, expenseOverallByDate.getExpense_time(), expense_image, paymentType, expenseOverallByDate.getPush_Id(), expenseOverallByDate.getDate());
-                                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid()).child(context.getString(R.string.expense_bydate_key)).child(expenseParticularDay.getDate()).child(context.getString(R.string.expense_by_time_key));
+                                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child(context.getString(R.string.expense_bydate_key)).child(expenseParticularDay.getDate()).child(context.getString(R.string.expense_by_time_key));
                                         databaseReference.child(expenseOverallByDate.getPush_Id()).setValue(expenseParticularDay);
 
                                         dialog.dismiss();
                                         expenseParticularDays.set(position, expenseParticularDay);
                                         notifyDataSetChanged();
-                                        DatabaseReference recentRefrence = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid()).child(context.getString(R.string.expense_bydate_key)).child(expenseParticularDay.getDate()).child(context.getString(R.string.recent_key));
+                                        DatabaseReference recentRefrence = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child(context.getString(R.string.expense_bydate_key)).child(expenseParticularDay.getDate()).child(context.getString(R.string.recent_key));
                                         recentRefrence.setValue(expenseParticularDays.get(0));
 
                                     }
@@ -185,6 +182,7 @@ public class ExpensePerTimeAdapter extends RecyclerView.Adapter<ExpensePerTimeAd
     }
 
     private void showDeleteConfirmationDialog(final ExpenseParticularDay expenseOverallByDate, final DatabaseReference databaseReference, final int pos) {
+        final FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(context.getString(R.string.delet_warning));
         builder.setPositiveButton(context.getString(R.string.confirm), new DialogInterface.OnClickListener() {
@@ -195,7 +193,7 @@ public class ExpensePerTimeAdapter extends RecyclerView.Adapter<ExpensePerTimeAd
                 UpdateDataUtils.updateTotalExpense(expenseOverallByDate.getExpense(), context.getString(R.string.util_action_delet), context.getString(R.string.zero), context);
                 expenseParticularDays.remove(pos);
                 notifyDataSetChanged();
-                DatabaseReference recentRefrence = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid()).child(context.getString(R.string.expense_bydate_key)).child(expenseOverallByDate.getDate()).child(context.getString(R.string.recent_key));
+                DatabaseReference recentRefrence = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child(context.getString(R.string.expense_bydate_key)).child(expenseOverallByDate.getDate()).child(context.getString(R.string.recent_key));
                 if (expenseParticularDays.size() > 0) {
                     recentRefrence.setValue(expenseParticularDays.get(0));
                 } else {

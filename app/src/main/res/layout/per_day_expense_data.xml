@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="74dp"
             android:layout_marginStart="74dp"
-            android:text="Recent Expense"
+            android:text="@string/recent_expense"
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 

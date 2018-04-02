@@ -3,11 +3,13 @@ package com.example.android.expensetracker;
 
 import android.app.ActivityOptions;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -18,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -59,7 +62,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements OverallDataAdapter.ListItemClickListner {
 
-    private static String salary;
+    private String salary="";
     private Dialog dialog;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -75,9 +78,13 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
     private ArrayList<ExpenseOverallByDate> arrayList = new ArrayList<>();
     private String d;
     private int RC_SIGN_IN = 1;
+    private String country="India";
     private String job_tag = "my_job_tag";
     private SharedPreferences settingsPref;
+    private Boolean isDialogOpen=false;
     private InterstitialAd mInterstitialAd;
+    private Boolean savedState=false;
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -112,6 +119,13 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(savedInstanceState!=null){
+            salary=savedInstanceState.getString(getString(R.string.pop_up_Salary));
+            country=savedInstanceState.getString(getString(R.string.user_country));
+            savedState=true;
+
+        }
         MobileAds.initialize(this, getString(R.string.test_add_key));
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getString(R.string.test_add_key));
@@ -147,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
+
                     firebaseDatabase = FirebaseDatabase.getInstance();
                     databaseRefrence = firebaseDatabase.getReference().child(firebaseUser.getUid());
                     updateUserInfo(firebaseUser);
@@ -250,27 +265,53 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
     }
 
     private void launchSalaryUpdateDialog() {
+
         dialog = new Dialog(MainActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.popup);
-        dialog.show();
+
         spinner = dialog.findViewById(R.id.country_spinner);
         arrayAdapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.currency_array, android.R.layout.simple_spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
+        spinner.setSelection(arrayAdapter.getPosition(country));
         salary_edit_text = dialog.findViewById(R.id.edit_text_salary);
+            if(savedState){
+            spinner.setSelection(arrayAdapter.getPosition(country));
+            salary_edit_text.setText(salary);}
+
+        dialog.show();
+
+        dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode,
+                                 KeyEvent event) {
+
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                    dialog.dismiss();
+                    finish();
+                }
+                return true;
+            }
+        });
+
         Button button = dialog.findViewById(R.id.done_updating);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String country = spinner.getSelectedItem().toString();
+                country = spinner.getSelectedItem().toString();
                 salary = salary_edit_text.getText().toString();
                 SharedPreferences.Editor editor = settingsPref.edit();
                 editor.putString(getString(R.string.monthlySalary), salary);
                 editor.apply();
                 User user = new User(salary, salary, "0", country);
                 databaseRefrence.setValue(user);
+
+
                 dialog.dismiss();
+
                 readdata();
                 updateRecycler();
 
@@ -287,6 +328,7 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
                     readdata();
                     updateRecycler();
                 } else {
+                    isDialogOpen=true;
                     launchSalaryUpdateDialog();
 
                 }
@@ -423,5 +465,15 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
 
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+            if(isDialogOpen) {
+                outState.putString(getString(R.string.user_country), spinner.getSelectedItem().toString());
+                outState.putString(getString(R.string.pop_up_Salary), salary_edit_text.getText().toString());
+            }
+
+
+        super.onSaveInstanceState(outState);
+    }
 }
 

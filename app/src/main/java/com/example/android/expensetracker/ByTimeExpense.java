@@ -1,6 +1,7 @@
 package com.example.android.expensetracker;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Slide;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -54,7 +56,13 @@ public class ByTimeExpense extends AppCompatActivity implements ExpensePerTimeAd
     private Integer expense_image = 0;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private Boolean isDialogOPen = false;
     private DatabaseReference recentExpenseRefrence;
+    private String expenseAmountText;
+    private EditText editTextDialog;
+    private Spinner spinner;
+    private String paymentMethod;
+    private Boolean isExpenseTypeDialogOpen = false;
 
     public ArrayList<ExpenseTypeData> setSpinnerList() {
         ArrayList<ExpenseTypeData> arrayList = new ArrayList<>();
@@ -88,7 +96,16 @@ public class ByTimeExpense extends AppCompatActivity implements ExpensePerTimeAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_by_time_expense);
+        if (savedInstanceState != null) {
+            expenseAmountText = savedInstanceState.getString(getString(R.string.editTextdata));
+            expense_type = savedInstanceState.getString(getString(R.string.exp_type_inst));
+            expense_image = savedInstanceState.getInt(getString(R.string.exp_typ_inst_image));
+            paymentMethod = savedInstanceState.getString(getString(R.string.spinner_payment_method));
+            isDialogOPen = savedInstanceState.getBoolean(getString(R.string.isdialog));
+            isExpenseTypeDialogOpen = savedInstanceState.getBoolean(getString(R.string.isExpenseDialog));
+            updateUi(true);
 
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Slide slide = new Slide(Gravity.BOTTOM);
             slide.addTarget(R.id.by_time_expense_details);
@@ -108,7 +125,8 @@ public class ByTimeExpense extends AppCompatActivity implements ExpensePerTimeAd
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateUi();
+                isDialogOPen = true;
+                updateUi(false);
             }
         });
         updateTodayExpense(d);
@@ -120,91 +138,89 @@ public class ByTimeExpense extends AppCompatActivity implements ExpensePerTimeAd
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        isDialogOPen = false;
+        isExpenseTypeDialogOpen = false;
         finish();
     }
 
-    private void updateUi() {
+    private void updateUi(Boolean savedInst) {
+        if (isDialogOPen) {
+            dialog = new Dialog(ByTimeExpense.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.add_expense_pop_up);
+            UpdateDataUtils.updatePopUpSavings(dialog, ByTimeExpense.this);
+            editTextDialog = dialog.findViewById(R.id.expense_amount_per_time);
+            spinner = dialog.findViewById(R.id.payment_method_spinner);
+            final TextView textView = dialog.findViewById(R.id.expense_type_temp_text);
+            final ImageView imageView = dialog.findViewById(R.id.expense_type_temp_image);
+            final ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(ByTimeExpense.this, R.array.payment_method, android.R.layout.simple_spinner_item);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(arrayAdapter);
+            if (savedInst) {
+                editTextDialog.setText(expenseAmountText);
+                spinner.setSelection(arrayAdapter.getPosition(paymentMethod));
+                textView.setText(expense_type);
+                imageView.setImageResource(expense_image);
 
-        dialog = new Dialog(ByTimeExpense.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.add_expense_pop_up);
-        UpdateDataUtils.updatePopUpSavings(dialog, ByTimeExpense.this);
-
-        final Spinner spinner = dialog.findViewById(R.id.payment_method_spinner);
-        final ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(ByTimeExpense.this, R.array.payment_method, android.R.layout.simple_spinner_item);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(arrayAdapter);
-
-        dialog.show();
-        ImageView but = dialog.findViewById(R.id.dialog_to_doalog);
-        but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                expense_Type_List = setSpinnerList();
-                final Dialog dial = new Dialog(ByTimeExpense.this);
-                final ExpenseTypeAdapter expenseTypeAdapter = new ExpenseTypeAdapter(ByTimeExpense.this, expense_Type_List);
-                dial.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dial.setContentView(R.layout.expense_type_popup);
-                TextView exit = dial.findViewById(R.id.exit_expense_type);
-                exit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dial.dismiss();
-                    }
-                });
-
-                GridView gridView = dial.findViewById(R.id.expense_type_grid);
-                gridView.setAdapter(expenseTypeAdapter);
-                dial.show();
-                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        ExpenseTypeData expenseTypeSpinnerDat = expense_Type_List.get(i);
-                        expense_type = expenseTypeSpinnerDat.getExpe_type_name();
-                        expense_image = expenseTypeSpinnerDat.getExp_type_image();
-                        TextView textView = dialog.findViewById(R.id.expense_type_temp_text);
-                        textView.setText(expense_type);
-                        ImageView imageView = dialog.findViewById(R.id.expense_type_temp_image);
-                        imageView.setImageResource(expense_image);
-                        expenseTypeAdapter.clear();
-                        dial.dismiss();
-                    }
-                });
             }
-        });
 
-        Button button = dialog.findViewById(R.id.done_updating_expense_per_time);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                databaseReference = firebaseDatabase.getReference().child(firebaseUser.getUid()).child(getString(R.string.expense_bydate_key)).child(d).child(getString(R.string.expense_by_time_key));
-                EditText editText = dialog.findViewById(R.id.expense_amount_per_time);
-                String expAmount = editText.getText().toString();
-                String paymentMethod = spinner.getSelectedItem().toString();
-                Date date = new Date();
-
-                SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.pattern));
-                String currentDateTimeString = sdf.format(date);
-                String id = databaseReference.push().getKey();
-                if (expAmount.isEmpty() || expense_type.isEmpty() || expense_image == 0) {
-                    UpdateDataUtils.showEmptyWarning(dialog, ByTimeExpense.this);
-                } else {
-                    ExpenseParticularDay expenseParticularDay = new ExpenseParticularDay(expAmount, expense_type, currentDateTimeString, expense_image, paymentMethod, id, d);
-                    recentExpenseRefrence = firebaseDatabase.getReference().child(firebaseUser.getUid()).child(getString(R.string.expense_bydate_key)).child(d).child(getString(R.string.recent_key));
-                    recentExpenseRefrence.setValue(expenseParticularDay);
-
-                    databaseReference.child(id).setValue(expenseParticularDay);
-                    UpdateDataUtils.updateTotalSavings(expAmount, getString(R.string.util_action_add), getString(R.string.zero), ByTimeExpense.this);
-                    UpdateDataUtils.updateTotalExpense(expAmount, getString(R.string.util_action_add), getString(R.string.zero), ByTimeExpense.this);
-                    UpdateDataUtils.updatePerDayTotal(expAmount, d, getString(R.string.util_action_add), getString(R.string.zero), ByTimeExpense.this);
-                    editText.clearComposingText();
-                    dialog.dismiss();
+            dialog.show();
+            if (isExpenseTypeDialogOpen) launchExpenseTypeDialog(imageView, textView);
+            ImageView but = dialog.findViewById(R.id.dialog_to_doalog);
+            but.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    isExpenseTypeDialogOpen = true;
+                    launchExpenseTypeDialog(imageView, textView);
                 }
+            });
+            dialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+                @Override
+                public boolean onKey(DialogInterface arg0, int keyCode,
+                                     KeyEvent event) {
+
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        isDialogOPen = false;
+                        dialog.dismiss();
+                    }
+                    return true;
+                }
+            });
+
+            Button button = dialog.findViewById(R.id.done_updating_expense_per_time);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    databaseReference = firebaseDatabase.getReference().child(firebaseUser.getUid()).child(getString(R.string.expense_bydate_key)).child(d).child(getString(R.string.expense_by_time_key));
+                    expenseAmountText = editTextDialog.getText().toString();
+                    paymentMethod = spinner.getSelectedItem().toString();
+                    Date date = new Date();
+
+                    SimpleDateFormat sdf = new SimpleDateFormat(getString(R.string.pattern));
+                    String currentDateTimeString = sdf.format(date);
+                    String id = databaseReference.push().getKey();
+                    if (expenseAmountText.isEmpty() || expense_type.isEmpty() || expense_image == 0) {
+                        UpdateDataUtils.showEmptyWarning(dialog, ByTimeExpense.this);
+                    } else {
+                        ExpenseParticularDay expenseParticularDay = new ExpenseParticularDay(expenseAmountText, expense_type, currentDateTimeString, expense_image, paymentMethod, id, d);
+                        recentExpenseRefrence = firebaseDatabase.getReference().child(firebaseUser.getUid()).child(getString(R.string.expense_bydate_key)).child(d).child(getString(R.string.recent_key));
+                        recentExpenseRefrence.setValue(expenseParticularDay);
+
+                        databaseReference.child(id).setValue(expenseParticularDay);
+                        UpdateDataUtils.updateTotalSavings(expenseAmountText, getString(R.string.util_action_add), getString(R.string.zero), ByTimeExpense.this);
+                        UpdateDataUtils.updateTotalExpense(expenseAmountText, getString(R.string.util_action_add), getString(R.string.zero), ByTimeExpense.this);
+                        UpdateDataUtils.updatePerDayTotal(expenseAmountText, d, getString(R.string.util_action_add), getString(R.string.zero), ByTimeExpense.this);
+                        editTextDialog.clearComposingText();
+                        isDialogOPen = false;
+                        dialog.dismiss();
+                    }
 
 
-            }
-        });
-
+                }
+            });
+        }
 
     }
 
@@ -272,5 +288,65 @@ public class ByTimeExpense extends AppCompatActivity implements ExpensePerTimeAd
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (isDialogOPen) {
+            outState.putString(getString(R.string.editTextdata), editTextDialog.getText().toString());
+            outState.putString(getString(R.string.exp_type_inst), expense_type);
+            outState.putInt(getString(R.string.exp_typ_inst_image), expense_image);
+            outState.putString(getString(R.string.spinner_payment_method), spinner.getSelectedItem().toString());
+            outState.putBoolean(getString(R.string.isdialog), isDialogOPen);
+            outState.putBoolean(getString(R.string.isExpenseDialog), isExpenseTypeDialogOpen);
+        }
+        super.onSaveInstanceState(outState);
+    }
 
+    private void launchExpenseTypeDialog(final ImageView imageView, final TextView textView) {
+        if (isExpenseTypeDialogOpen) {
+            expense_Type_List = setSpinnerList();
+            final Dialog dial = new Dialog(ByTimeExpense.this);
+            final ExpenseTypeAdapter expenseTypeAdapter = new ExpenseTypeAdapter(ByTimeExpense.this, expense_Type_List);
+            dial.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dial.setContentView(R.layout.expense_type_popup);
+            TextView exit = dial.findViewById(R.id.exit_expense_type);
+            exit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dial.dismiss();
+                    isExpenseTypeDialogOpen = false;
+                }
+            });
+
+            GridView gridView = dial.findViewById(R.id.expense_type_grid);
+            gridView.setAdapter(expenseTypeAdapter);
+            dial.show();
+            dial.setOnKeyListener(new Dialog.OnKeyListener() {
+
+                @Override
+                public boolean onKey(DialogInterface arg0, int keyCode,
+                                     KeyEvent event) {
+
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+                        isExpenseTypeDialogOpen = false;
+                        dial.dismiss();
+                    }
+                    return true;
+                }
+            });
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    ExpenseTypeData expenseTypeSpinnerDat = expense_Type_List.get(i);
+                    expense_type = expenseTypeSpinnerDat.getExpe_type_name();
+                    expense_image = expenseTypeSpinnerDat.getExp_type_image();
+
+                    textView.setText(expense_type);
+                    imageView.setImageResource(expense_image);
+                    expenseTypeAdapter.clear();
+                    dial.dismiss();
+                    isExpenseTypeDialogOpen = false;
+                }
+            });
+        }
+    }
 }
