@@ -85,6 +85,7 @@
         android:elevation="6dp"
         android:src="@android:drawable/ic_input_add"
         app:elevation="6dp"
+        android:contentDescription="@string/add_Expense_button"
         app:layout_anchor="@+id/appBarLayout"
         app:layout_anchorGravity="bottom|right|end" />
 

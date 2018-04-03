@@ -195,6 +195,16 @@
         android:layout_marginTop="8dp"
         android:text="@string/no_expense_added"
         android:visibility="gone" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginWarning"
+        android:layout_below="@+id/tempLinear"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        android:text="@string/login_warning"/>
 
 
 </RelativeLayout>

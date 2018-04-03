@@ -20,10 +20,10 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class UpdateDataUtils {
-    private static FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     public static void updateTotalSavings(String exp, final String action, final String previous, final Context context) {
         final String temp = exp;
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference overAllSavings = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child(context.getString(R.string.final_savings));
 
         overAllSavings.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -55,6 +55,7 @@ public class UpdateDataUtils {
 
     public static void updateTotalExpense(String exp, final String action, final String previous, final Context context) {
         final String temp = exp;
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference overAllExpense = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child(context.getString(R.string.final_expense));
 
         overAllExpense.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -85,6 +86,7 @@ public class UpdateDataUtils {
 
     public static void updatePerDayTotal(String exp, String date, final String action, final String previous, final Context context) {
         final String temp = exp;
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference perDayTotalExpense = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child(context.getString(R.string.expense_bydate_key)).child(date).child(context.getString(R.string.expense_particular_day));
 
         perDayTotalExpense.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -117,7 +119,8 @@ public class UpdateDataUtils {
     public static void updatePopUpSavings(Dialog d, final Context context) {
         final TextView saving_temp = d.findViewById(R.id.savings_value_while_adding_expense);
         final TextView message = d.findViewById(R.id.user_message);
-        final DatabaseReference overAllSavings = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child("savings_final");
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference overAllSavings = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child(context.getString(R.string.salary_key));
         overAllSavings.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

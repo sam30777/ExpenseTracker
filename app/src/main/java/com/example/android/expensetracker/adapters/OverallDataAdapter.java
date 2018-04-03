@@ -13,6 +13,7 @@ import com.example.android.expensetracker.R;
 import com.example.android.expensetracker.data.ExpenseOverallByDate;
 import com.example.android.expensetracker.data.ExpenseParticularDay;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,13 +58,14 @@ public class OverallDataAdapter extends RecyclerView.Adapter<OverallDataAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         final ExpenseOverallByDate expenseOverallByDate = arrayList.get(position);
         holder.day_name_text.setText(expenseOverallByDate.getDayName());
         holder.month_text.setText(expenseOverallByDate.getMonth());
         holder.day_text.setText(expenseOverallByDate.getDay());
         holder.expense_that_day_text.setText(expenseOverallByDate.getExpense_that_day());
         String date = expenseOverallByDate.getDayName() + "-" + expenseOverallByDate.getDay() + "-" + expenseOverallByDate.getMonth();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid()).child(context.getString(R.string.expense_bydate_key)).child(date);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child(context.getString(R.string.expense_bydate_key)).child(date);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -85,8 +87,9 @@ public class OverallDataAdapter extends RecyclerView.Adapter<OverallDataAdapter.
     }
 
     private void readData(final ViewHolder holder, ExpenseOverallByDate expenseOverallByDate) {
+        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         String date = expenseOverallByDate.getDayName() + "-" + expenseOverallByDate.getDay() + "-" + expenseOverallByDate.getMonth();
-        DatabaseReference recentListener = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getUid()).child(context.getString(R.string.expense_bydate_key)).child(date).child(context.getString(R.string.recent_key));
+        DatabaseReference recentListener = FirebaseDatabase.getInstance().getReference().child(firebaseUser.getUid()).child(context.getString(R.string.expense_bydate_key)).child(date).child(context.getString(R.string.recent_key));
 
         recentListener.addValueEventListener(new ValueEventListener() {
             @Override

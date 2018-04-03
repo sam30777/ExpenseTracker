@@ -3,6 +3,9 @@ package com.example.android.expensetracker;
 
 import android.app.ActivityOptions;
 import android.app.Dialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -212,10 +216,11 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
 
 
     private void readdata() {
-        final DatabaseReference userIdRefrence = firebaseDatabase.getReference();
-        childevenLisntener = new ChildEventListener() {
+        final FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+        final DatabaseReference userIdRefrence = firebaseDatabase.getReference().child(firebaseUser.getUid());
+        userIdRefrence.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 TextView textView = findViewById(R.id.salary_value);
                 textView.setText(user.getSalary_final());
@@ -226,26 +231,10 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        };
-        userIdRefrence.addChildEventListener(childevenLisntener);
+        });
 
     }
 
@@ -255,6 +244,10 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
             if (resultCode == RESULT_OK) {
                 FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 Toast.makeText(MainActivity.this, getString(R.string.greetings) + firebaseUser.getDisplayName(), Toast.LENGTH_SHORT).show();
+                int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), ExpenseAppWidget.class));
+                ExpenseAppWidget myWidget = new ExpenseAppWidget();
+                myWidget.onUpdate(this, AppWidgetManager.getInstance(this),ids);
+
             } else {
                 Toast.makeText(MainActivity.this, R.string.signinfailed, Toast.LENGTH_SHORT).show();
                 finish();
@@ -303,17 +296,17 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
             public void onClick(View view) {
                 country = spinner.getSelectedItem().toString();
                 salary = salary_edit_text.getText().toString();
+                if(country.isEmpty()||salary.isEmpty()){
+                    showEmptyWarning(dialog);
+                }else{
                 SharedPreferences.Editor editor = settingsPref.edit();
                 editor.putString(getString(R.string.monthlySalary), salary);
                 editor.apply();
                 User user = new User(salary, salary, "0", country);
                 databaseRefrence.setValue(user);
-
-
                 dialog.dismiss();
-
                 readdata();
-                updateRecycler();
+                updateRecycler();}
 
             }
         });
@@ -356,7 +349,6 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
         } else {
             imageView.setImageResource(R.drawable.profile);
         }
-
 
         updateUi();
     }
@@ -425,8 +417,6 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
                         savingsRef.setValue(monthlySalary);
                     }
                     ExpenseOverallByDate expenseOverallByDate = new ExpenseOverallByDate(day, monthString, dayOfTheWeek, getString(R.string.zero));
-
-
                     dataref.child(d).setValue(expenseOverallByDate);
                     updateRecycler();
                 }
@@ -474,6 +464,26 @@ public class MainActivity extends AppCompatActivity implements OverallDataAdapte
 
 
         super.onSaveInstanceState(outState);
+    }
+    public  void showEmptyWarning(final Dialog d) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage(getString(R.string.add_salary_warning));
+        builder.setPositiveButton(getString(R.string.possitive_add), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.neg_exit), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                d.dismiss();
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 }
 

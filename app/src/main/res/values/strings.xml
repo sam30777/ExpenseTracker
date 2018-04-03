@@ -125,6 +125,12 @@
     <string name="isMainDialog">isMainDialogOpen</string>
     <string name="pop_up_Salary">popip_salary_amount</string>
     <string name="user_country">user_country</string>
+    <string name="add_salary_warning">You have to add salary to continue</string>
+    <string name="possitive_add">Add</string>
+    <string name="neg_exit">Exit</string>
+    <string name="add_Expense_button">Add Expense Button</string>
+    <string name="login_warning">Login to Display Data</string>
+    <string name="no_Expense_warning">No Expense Added</string>
     <string-array name="date_Array">
          <item>01</item>
          <item>02</item>
